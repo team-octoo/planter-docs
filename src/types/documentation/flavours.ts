@@ -1,5 +1,8 @@
+export interface Framework {
+    name: string;
+}
 export interface Flavour {
-    framework: string;
+    framework: Framework;
     name: string;
     recommended: boolean;
     info: string;

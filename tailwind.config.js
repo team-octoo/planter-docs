@@ -16,6 +16,9 @@ module.exports = {
       },
       boxShadow: {
         smooth: '0px 0px 12px 9px #00000008'
+      },
+      dropShadow: {
+        smooth: '0px 0px 12px 9px #00000008'
       }
     }
   },

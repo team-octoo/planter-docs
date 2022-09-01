@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { FC, useLayoutEffect, useRef, useState } from 'react';
+import { FC, Fragment, useEffect, useRef, useState } from 'react';
 import { useEffectOnce } from '../../../state/hooks/useEffectOnce/useEffectOnce';
 import { Icon } from '../../basics';
 
@@ -8,15 +8,22 @@ interface Props {};
 const results = [1, 2, 3]
 
 const GlobalSearch = () => {
-    const [ searchQuery, setSearchQuery ] = useState<string>('');
+    const searchFieldInput = useRef<HTMLInputElement>(null)
     const searchFieldContainer = useRef<HTMLDivElement>(null)
+    const [ searchQuery, setSearchQuery ] = useState<string>('');
     const [ searchActive, setSearchActive ] = useState(false);
     
     const handleClickOutside = (e: MouseEvent) => {
         const target = e.target as HTMLElement;
             
         const clickedOutside = !searchFieldContainer.current?.contains(target);
-        setSearchActive(clickedOutside ? false : true);
+        
+        if (clickedOutside) {
+            setSearchActive(false);
+        } else {
+            setSearchActive(true);
+        }
+        
     }
     
     useEffectOnce(() => {
@@ -25,20 +32,26 @@ const GlobalSearch = () => {
         return () => window.removeEventListener('click', handleClickOutside);
     })
     
+    const searchSuggestions = ['React', 'Vue', 'setup'];
+    
     return (<>
         <div
             ref={ searchFieldContainer }
             onClick={() => setSearchActive(true)}
             className={ classNames(
-                'relative bg-white p-4 mt-2 border-t border-x border-stone-200 z-10',
-                searchActive ? 'border-opacity-100 shadow-smooth rounded-t-xl' : 'border-opacity-0'
+                'relative mt-2 z-10',
+                searchActive && 'drop-shadow-xl'
             )}
         >
             <div 
-                className="flex items-center gap-2 relative"
+                className={classNames(
+                    'p-4 flex items-center gap-2 relative bg-white border-t border-x border-stone-200',
+                    searchActive ? 'border-opacity-100 rounded-t-xl' : 'border-opacity-0'
+                )}
             >
                 <Icon name="search" size="1rem" className="text-stone-400" />
                 <input 
+                    ref={ searchFieldInput }
                     name="query"
                     value={ searchQuery }
                     onChange={(e) => setSearchQuery(e.target.value)}
@@ -50,21 +63,20 @@ const GlobalSearch = () => {
             </div>
             <div 
                 className={classNames(
-                    'absolute inset-x-0 border-x border-b border-stone-200 rounded-b-xl bg-white mx-[-1.5px] shadow-smooth z-0',
+                    'absolute inset-x-0 border-x border-b border-stone-200 rounded-b-xl bg-white overflow-hidden',
                     searchActive ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
                 )}
             >
-                <div className="px-4 my-4">
+                <div className="px-4 mb-4">
                     <hr />
                 </div>
                 <div className="px-4">
                     { !!searchQuery ? 
-                        <p className="text-stone-400">Results for <span>{ searchQuery }</span></p> :
+                        <p className="text-stone-600">Results for <span>{ searchQuery }</span></p> :
                         <p className="text-stone-400">
-                            Start by searching &#32;
-                            <span className="text-stone-600 underline underline-offset-2">React</span>,&#32; 
-                            <span className="text-stone-600 underline underline-offset-2">Vue</span>, &#32;
-                            <span className="text-stone-600 underline underline-offset-2">setup</span>
+                            Start by searching { searchSuggestions.map((suggestion, index) => (
+                                <Fragment key={ index }><span className="text-stone-600 underline underline-offset-2" onClick={() => setSearchQuery(suggestion)}>{ suggestion }</span>, </Fragment>
+                            ))} ...
                         </p>
                     }
                 </div>
@@ -77,6 +89,11 @@ const GlobalSearch = () => {
                             </li>
                         ))}
                     </ul>
+                </div>
+                <div className="p-4 bg-emerald-50">
+                    <button>
+                        <span className="text-emerald-600">Looking to get started?</span>&nbsp;&nbsp;<span className="text-emerald-700 font-medium inline-flex items-center">Follow our tutorial!&nbsp;<Icon name="arrow-right" size="1.3rem" /></span>
+                    </button>
                 </div>
             </div>
         </div>

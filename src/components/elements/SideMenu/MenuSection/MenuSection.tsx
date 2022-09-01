@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { FC, ReactElement, useState } from 'react';
+import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MenuSection as Section } from '../../../../types/navigation/sections';
 import { Icon } from '../../../basics';
