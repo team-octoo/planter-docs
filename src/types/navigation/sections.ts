@@ -1,12 +1,12 @@
 export interface MenuSection {
-    label: string;
+    id: string;
+    name: string;
     icon?: string;
-    uri: string;
     sections?: SubSection[];
 }
 
 export interface SubSection {
-    label: string;
-    uri: string;
+    name: string;
+    id: string;
     sections?: SubSection[];
 }

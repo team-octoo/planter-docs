@@ -8,7 +8,7 @@ import SubSection from '../SubSection/SubSection';
 
 interface Props extends Section {}
 
-const MenuSection: FC<Props> = ({ label, icon, sections, uri }) => {
+const MenuSection: FC<Props> = ({ name, icon, sections, id }) => {
     const [ open, setOpen ] = useState(false);
     
     const toggleCollapse = () => setOpen(s => !s);
@@ -17,7 +17,7 @@ const MenuSection: FC<Props> = ({ label, icon, sections, uri }) => {
         <div className="w-full flex items-baseline group">
             <div>
                 <Link
-                    to={ uri }
+                    to={ id}
                     onClick={ toggleCollapse }
                     className={classNames(
                         'flex items-center mb-2',
@@ -34,11 +34,11 @@ const MenuSection: FC<Props> = ({ label, icon, sections, uri }) => {
                             )} />
                         )}
                     </div>
-                    <span className="text-lg font-medium group-hover:text-black">{ label }</span>
+                    <span className="text-lg font-medium group-hover:text-black">{ name }</span>
                 </Link>
                 { sections && (
                     <ExspansionPane active={ open }>
-                        <SubSection level={ 1 } sections={ sections } baseUri={ uri } />
+                        <SubSection level={ 1 } sections={ sections } baseUri={ id } />
                     </ExspansionPane>
                 )}
             </div>

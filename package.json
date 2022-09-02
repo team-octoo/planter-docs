@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@directus/sdk": "^10.1.4",
+    "@formkit/auto-animate": "^1.0.0-beta.3",
     "@team-octoo/planter": "file:..",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
@@ -12,6 +13,7 @@
     "@types/node": "^16.11.56",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
+    "@types/throttle-debounce": "^5.0.0",
     "axios": "^0.27.2",
     "classnames": "^2.3.1",
     "immer": "^9.0.15",
@@ -22,6 +24,7 @@
     "remixicon": "^2.5.0",
     "sass": "^1.54.5",
     "styled-components": "^5.3.5",
+    "throttle-debounce": "^5.0.0",
     "typescript": "^4.7.4",
     "web-vitals": "^2.1.4",
     "zustand": "^4.1.1"

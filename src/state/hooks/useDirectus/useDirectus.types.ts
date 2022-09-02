@@ -16,8 +16,13 @@ interface UseDirectusProperties<T> {
     error: any;
 }
 
+interface UseDirectusMethods {
+    refetch: (options: any) => void;
+    clearData: () => void;
+}
+
 interface UseDirectus {
-    <T = any>(collection: string, options?: any, dataClearingPolicy?: DataClearingPolicy): UseDirectusProperties<T>;
+    <T = any>(collection: string, options?: any, dataClearingPolicy?: DataClearingPolicy): UseDirectusProperties<T> & UseDirectusMethods;
 }
 
 export type {

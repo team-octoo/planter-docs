@@ -20,6 +20,7 @@ const useDirectus: UseDirectus = <T, >(collection: any, options: any, dataCleari
             clearData();
         }
     }
+
     
     const requestCompleted = () => {
         setLoading(false);
@@ -41,25 +42,33 @@ const useDirectus: UseDirectus = <T, >(collection: any, options: any, dataCleari
             clearData();
         }
     }, [dataClearingPolicy])
-        
-    useEffectOnce(() => {
+    
+    const request = useCallback((customOptions?: any) => {
         requestInitiated();
-        
         directus
             .items(collection)
             .readByQuery({
-                ...options
+                ...options,
+                ...customOptions
             })
             .then(response => {
                 onSuccess(response.data as unknown as T)
             })
             .catch(error => onError(error))
+    }, [collection, options])
+        
+    useEffectOnce(() => {
+        if (!options.lazy) {
+            request();
+        }
     })
     
     return {
         data,
         loading,
-        error
+        error,
+        refetch: request,
+        clearData
     };
 }
 

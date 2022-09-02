@@ -19,7 +19,7 @@ const SubSection: FC<Props> = ({ sections, level, baseUri }) => {
         <ul className="text-stone-500">
             { sections.map((section) => {
                 const hasSections = !!section.sections;
-                const uri = baseUri + '/' + section.uri;
+                const uri = baseUri + '/' + section.id;
                 
                 return (
                     <>
@@ -30,8 +30,8 @@ const SubSection: FC<Props> = ({ sections, level, baseUri }) => {
                             )}
                         >
                             { hasSections ? 
-                                <button onClick={ toggleCollapse }>{ section.label }</button> : 
-                                <Link to={ uri }>{ section.label }</Link>
+                                <button onClick={ toggleCollapse }>{ section.name }</button> : 
+                                <Link to={ uri }>{ section.name }</Link>
                             }
                             { section.sections && (
                                 <ExspansionPane active={ open }>
