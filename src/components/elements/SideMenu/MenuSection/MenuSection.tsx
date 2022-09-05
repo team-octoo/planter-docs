@@ -1,23 +1,27 @@
 import classNames from 'classnames';
-import { FC, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MenuSection as Section } from '../../../../types/navigation/sections';
+import { MainSection } from '../../../../types/documentation/sections';
 import { Icon } from '../../../basics';
 import { ExspansionPane } from '../../../elements';
 import SubSection from '../SubSection/SubSection';
 
-interface Props extends Section {}
+interface Props extends MainSection {
+    baseUri: string;
+}
 
-const MenuSection: FC<Props> = ({ name, icon, sections, id }) => {
+const MenuSection: FC<Props> = ({ name, icon, sections, uri, baseUri }) => {
     const [ open, setOpen ] = useState(false);
     
     const toggleCollapse = () => setOpen(s => !s);
+    
+    const composedUri = useMemo(() => baseUri + '/' + uri, [uri, baseUri])
     
     return (
         <div className="w-full flex items-baseline group">
             <div>
                 <Link
-                    to={ id}
+                    to={ composedUri }
                     onClick={ toggleCollapse }
                     className={classNames(
                         'flex items-center mb-2',
@@ -38,7 +42,7 @@ const MenuSection: FC<Props> = ({ name, icon, sections, id }) => {
                 </Link>
                 { sections && (
                     <ExspansionPane active={ open }>
-                        <SubSection level={ 1 } sections={ sections } baseUri={ id } />
+                        <SubSection level={ 1 } sections={ sections } baseUri={ composedUri } />
                     </ExspansionPane>
                 )}
             </div>

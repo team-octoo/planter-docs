@@ -8,7 +8,7 @@ function App() {
     <div className="flex flex-col h-full bg-stone-50">
       <Header />
       <div className="flex-1 container mx-auto flex">
-        <SideMenu />
+        <SideMenu baseUri="docs" />
         <main className="py-8 w-full">
           <Outlet />
         </main>

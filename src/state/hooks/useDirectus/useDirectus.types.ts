@@ -1,4 +1,15 @@
-import { QueryMany } from '@directus/sdk'
+import { QueryMany, Filter } from '@directus/sdk';
+
+interface DirectusRequestOptions {
+    fields?: string | string[];
+    filter?: Filter<{ [key: string]: string | boolean | number }>;
+    search?: string;
+    limit?: number;
+}
+
+interface QueryOptions extends DirectusRequestOptions {
+    lazy?: boolean;
+}
 
 type DataClearingPolicy = 
     /** Clear data when an error is thrown */
@@ -17,12 +28,12 @@ interface UseDirectusProperties<T> {
 }
 
 interface UseDirectusMethods {
-    refetch: (options: any) => void;
+    refetch: (options?: QueryOptions) => void;
     clearData: () => void;
 }
 
 interface UseDirectus {
-    <T = any>(collection: string, options?: any, dataClearingPolicy?: DataClearingPolicy): UseDirectusProperties<T> & UseDirectusMethods;
+    <T = any>(collection: string, options?: QueryOptions, dataClearingPolicy?: DataClearingPolicy): UseDirectusProperties<T> & UseDirectusMethods;
 }
 
 export type {

@@ -2,7 +2,6 @@ import { Directus, QueryMany } from '@directus/sdk';
 import { useCallback, useState } from 'react';
 import { useEffectOnce } from '../useEffectOnce/useEffectOnce';
 import UseDirectus from './useDirectus.types';
-import useDirectusBase from './useDirectusBase/useDirectusBase';
 
 const useDirectus: UseDirectus = <T, >(collection: any, options: any, dataClearingPolicy = 'refresh') => {
     const [ data, setData ] = useState<T | null>(null)
@@ -49,7 +48,7 @@ const useDirectus: UseDirectus = <T, >(collection: any, options: any, dataCleari
             .items(collection)
             .readByQuery({
                 ...options,
-                ...customOptions
+                ...customOptions,
             })
             .then(response => {
                 onSuccess(response.data as unknown as T)
@@ -58,7 +57,7 @@ const useDirectus: UseDirectus = <T, >(collection: any, options: any, dataCleari
     }, [collection, options])
         
     useEffectOnce(() => {
-        if (!options.lazy) {
+        if (!options?.lazy) {
             request();
         }
     })

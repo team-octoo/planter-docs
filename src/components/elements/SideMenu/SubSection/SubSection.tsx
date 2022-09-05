@@ -1,11 +1,11 @@
 import classNames from 'classnames';
 import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MenuSection } from '../../../../types/navigation/sections';
+import { MainSection } from '../../../../types/documentation/sections';
 import ExspansionPane from '../../ExspansionPane/ExspansionPane';
 
 interface Props {
-    sections: MenuSection[]
+    sections: MainSection[]
     level: number;
     baseUri?: string;
 };
@@ -19,7 +19,7 @@ const SubSection: FC<Props> = ({ sections, level, baseUri }) => {
         <ul className="text-stone-500">
             { sections.map((section) => {
                 const hasSections = !!section.sections;
-                const uri = baseUri + '/' + section.id;
+                const composedUri = baseUri + '/' + section.uri;
                 
                 return (
                     <>
@@ -31,7 +31,7 @@ const SubSection: FC<Props> = ({ sections, level, baseUri }) => {
                         >
                             { hasSections ? 
                                 <button onClick={ toggleCollapse }>{ section.name }</button> : 
-                                <Link to={ uri }>{ section.name }</Link>
+                                <Link to={ composedUri }>{ section.name }</Link>
                             }
                             { section.sections && (
                                 <ExspansionPane active={ open }>
@@ -39,7 +39,7 @@ const SubSection: FC<Props> = ({ sections, level, baseUri }) => {
                                         <SubSection 
                                             level={ level + 1 }
                                             sections={ section.sections } 
-                                            baseUri={ uri }
+                                            baseUri={ composedUri }
                                         />
                                     </div>
                                 </ExspansionPane>

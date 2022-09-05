@@ -11,7 +11,7 @@ const results = [1, 2, 3]
 
 const GlobalSearch = () => {
     const { data: searchResults, refetch, clearData } = useDirectus<any[]>('articles', { 
-        search: null, 
+        search: undefined, 
         fields: ['*', 'parent.name'], 
         limit: 3,
         lazy: true

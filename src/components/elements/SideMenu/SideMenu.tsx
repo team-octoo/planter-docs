@@ -1,16 +1,19 @@
 import { FC, useMemo } from 'react';
 import useDirectus from '../../../state/hooks/useDirectus/useDirectus';
-import { MenuSection as Section } from '../../../types/navigation/sections';
+import { MainSection } from '../../../types/documentation/sections';
 import Aside from './Aside/Aside';
 import MenuSection from './MenuSection/MenuSection';
-interface Props {}
 
-const SideMenu: FC<Props> = (props) => {
+interface Props {
+  baseUri: string
+}
+
+const SideMenu: FC<Props> = ({ baseUri }) => {
   const { data: articles } = useDirectus('sections', {
-    fields: ['*', 'sections.id', 'sections.name']
+    fields: ['*', 'sections.uri', 'sections.name']
   });
   
-  const sections = useMemo<Section[]>(() => {
+  const sections = useMemo<MainSection[]>(() => {
     return [
       ...(articles || []),
       // {
@@ -31,10 +34,10 @@ const SideMenu: FC<Props> = (props) => {
       {
         name: 'Flavours',
         icon: 'folders',
-        id: 'flavours',
+        uri: 'flavours',
         sections: [
-          { name: 'Default flavours', id: 'default' },
-          { name: 'Custom flavours', id: 'custom' },
+          { name: 'Default flavours', uri: 'default' },
+          { name: 'Custom flavours', uri: 'custom' },
         ]
       },
     ]
@@ -49,7 +52,7 @@ const SideMenu: FC<Props> = (props) => {
               key={ index }
               className="mb-2 last:mb-0"
             >
-              <MenuSection { ...section } />
+              <MenuSection baseUri={ baseUri } { ...section } />
             </li>
           ))}
         </ul>
