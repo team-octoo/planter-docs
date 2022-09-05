@@ -10,8 +10,9 @@ const ResultCard: FC<Props> = ({ result, ...otherProps }) => {
             className="col-span-1 block border border-stone-200 p-5 rounded-lg"
             { ...otherProps }
         >
-            <h3 className="">{ result.name }</h3>
-            <h4 className="text-stone-400 whitespace-nowrap overflow-hidden text-ellipsis">{ result.parent.name }</h4>
+            <h3 className="text-lg -mb-1">{ result.name }</h3>
+            <p className="text-stone-500">{ result.description }</p>
+            <h4 className="text-stone-400 whitespace-nowrap overflow-hidden text-ellipsis text-sm mt-1 font-medium">in { result.parent.name }</h4>
         </li>
     )
 }
