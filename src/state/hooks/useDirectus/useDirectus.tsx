@@ -43,6 +43,9 @@ const useDirectus: UseDirectus = <T, >(collection: any, options: any, dataCleari
     }, [dataClearingPolicy])
     
     const request = useCallback((customOptions?: any) => {
+        delete options?.lazy
+        delete customOptions?.lazy
+        
         requestInitiated();
         directus
             .items(collection)

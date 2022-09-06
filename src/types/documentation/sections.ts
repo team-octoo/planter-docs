@@ -10,4 +10,8 @@ export interface MainSection extends BaseSection {
     icon?: string;
 }
 
-export interface SubSection extends BaseSection {}
+export interface SubSection extends BaseSection {
+    content: string;
+    framework_support: boolean;
+    frameworks: any[];
+}

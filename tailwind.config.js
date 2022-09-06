@@ -5,6 +5,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        'stone': {
+          '150': '#e8e8e8'
+        }
+      },
       screens: {
         '3xl': '2048'
       },

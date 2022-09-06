@@ -1,4 +1,4 @@
-import { QueryMany, Filter } from '@directus/sdk';
+import { Filter } from '@directus/sdk';
 
 interface DirectusRequestOptions {
     fields?: string | string[];

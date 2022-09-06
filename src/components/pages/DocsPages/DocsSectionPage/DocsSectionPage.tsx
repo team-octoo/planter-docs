@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { Link, Outlet, useParams } from 'react-router-dom';
 import useDirectus from '../../../../state/hooks/useDirectus/useDirectus';
 import { MainSection } from '../../../../types/documentation/sections';
@@ -9,12 +9,12 @@ interface Props {};
 
 const DocsSectionPage: FC<Props> = () => {
     const { sectionIdentifier } = useParams<any>();
-    const { data: requestedMainSection, loading: requestingMainSection } = useDirectus<[MainSection]>('sections', {
+    const { data: requestedMainSection, loading: requestingMainSection, refetch: refetchMainSectionData } = useDirectus<[MainSection]>('sections', {
         filter: {
             'uri': sectionIdentifier,
         },
         limit: 1
-    })
+    }, 'loading');
     
     const mainSection = useMemo(() => {
         if (requestedMainSection) {
@@ -30,6 +30,10 @@ const DocsSectionPage: FC<Props> = () => {
             mainSection,
         }
     ), [mainSection]);
+    
+    useEffect(() => {
+        refetchMainSectionData()
+    }, [sectionIdentifier]);
     
     return (
         <div className="flex flex-col h-full">

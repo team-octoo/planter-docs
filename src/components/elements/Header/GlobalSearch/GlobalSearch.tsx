@@ -6,13 +6,14 @@ import { AnimatedList, Icon } from "../../../basics";
 import { debounce } from 'throttle-debounce';
 import ResultCard from "./ResultCard";
 import useRecentSearchStore from "../../../../state/stores/useRecentSearchStore/useRecentSearchStore";
+import { Link } from "react-router-dom";
 
 const results = [1, 2, 3]
 
 const GlobalSearch = () => {
     const { data: searchResults, refetch, clearData } = useDirectus<any[]>('articles', { 
         search: undefined, 
-        fields: ['*', 'parent.name'], 
+        fields: ['*', 'parent.name', 'parent.uri'], 
         limit: 3,
         lazy: true
     });
@@ -48,6 +49,11 @@ const GlobalSearch = () => {
         }
     }, [searchQuery])
     
+    const handleResultClick = (result: any) => {
+        registerRecentSearch(result);
+        setSearchActive(false);
+    }
+    
     const showSuggestions = !!searchQuery || searchResults?.length === 0;
     const searchSuggestions = ['Installation', 'Start', 'Setup'];
     
@@ -56,26 +62,32 @@ const GlobalSearch = () => {
             ref={ searchFieldContainer }
             onClick={() => setSearchActive(true)}
             className={classNames(
-                'relative mt-2 z-10',
+                'relative z-10 -ml-6',
                 searchActive && 'drop-shadow-xl'
             )}
         >
             <div 
                 className={classNames(
-                    'p-4 flex items-center gap-2 relative bg-white border-t border-x border-stone-200',
-                    searchActive ? 'border-opacity-100 rounded-t-xl' : 'border-opacity-0'
+                    'py-1 relative border-t bg-white border-x border-stone-200',
+                    searchActive ? 'border-opacity-100 rounded-t-xl bg-opacity-100' : 'border-opacity-0 bg-opacity-0'
                 )}
             >
-                <Icon name="search" size="1rem" className="text-stone-400" />
-                <input 
-                    ref={ searchFieldInput }
-                    name="query"
-                    value={ searchQuery }
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder={`Search ${ window.location.host }`} 
-                    autoComplete="off"
-                    className="placeholder:text-stone-400 w-full outline-none focus:outline-none focus-within:outline-none" 
-                />
+                <div className={classNames(
+                    'flex items-center gap-2 rounded-full py-3 px-4',
+                    'bg-gradient-to-r via-stone-100 to-transparent',
+                    searchActive ? 'max-w-full from-transparent' : 'max-w-xl from-stone-100'
+                )}>
+                    <Icon name="search" size="1rem" className="text-stone-400" />
+                    <input 
+                        ref={ searchFieldInput }
+                        name="query"
+                        value={ searchQuery }
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        placeholder={`Search ${ 'planter.js' || window.location.host }`} 
+                        autoComplete="off"
+                        className="placeholder:text-stone-400 w-full outline-none focus:outline-none focus-within:outline-none bg-transparent" 
+                    />
+                </div>
             </div>
             <div 
                 className={classNames(
@@ -88,7 +100,7 @@ const GlobalSearch = () => {
                 </div>
                 <div className="px-4 mb-4">
                     { showSuggestions ? 
-                        <p className="text-stone-600">Results for <span>{ searchQuery }</span></p> :
+                        <p className="text-stone-600">Results for <span className="italic">{ searchQuery }</span></p> :
                         <p className="text-stone-400">
                             Start by searching { searchSuggestions.map((suggestion, index) => (
                                 <Fragment key={ index }><span className="text-stone-500">{ suggestion }</span>, </Fragment>
@@ -103,11 +115,16 @@ const GlobalSearch = () => {
                         </>)}
                         <AnimatedList className="grid grid-cols-3 gap-4">
                             {(searchResults)?.map((result, index) => (
-                                <ResultCard 
+                                <Link 
+                                    to={ '/docs/' + result.parent.uri + '/' + result.uri } 
+                                    className="block" 
                                     key={ index }
-                                    onClick={() => registerRecentSearch(result)}
-                                    result={ result } 
-                                />
+                                >
+                                    <ResultCard 
+                                        onClick={() => handleResultClick(result)}
+                                        result={ result } 
+                                    />
+                                </Link>
                             ))}
                         </AnimatedList>
                     </div>
