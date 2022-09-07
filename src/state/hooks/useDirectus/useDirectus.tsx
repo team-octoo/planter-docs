@@ -2,13 +2,14 @@ import { Directus, QueryMany } from '@directus/sdk';
 import { useCallback, useState } from 'react';
 import { useEffectOnce } from '../useEffectOnce/useEffectOnce';
 import UseDirectus from './useDirectus.types';
+import useDirectusBase from './useDirectusBase/useDirectusBase';
 
 const useDirectus: UseDirectus = <T, >(collection: any, options: any, dataClearingPolicy = 'refresh') => {
     const [ data, setData ] = useState<T | null>(null)
     const [ error, setError ] = useState<null>(null)
     const [ loading, setLoading ] = useState<boolean>(false)
     
-    const directus = new Directus('https://9orfhb5z.directus.app');
+    const [ directus ] = useDirectusBase();
     
     const clearData = () => setData(null)
     const requestInitiated = () => {

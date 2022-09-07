@@ -2,12 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.scss';
 import App from './App';
-import { BrowserRouter, Routes, Route, Outlet, Navigate } from "react-router-dom";
-import FlavoursPage from './components/pages/FlavoursPage/FlavoursPage';
-import DocsMainPage from './components/pages/DocsPages/DocsMainPage/DocsMainPage';
-import DocsSectionPage from './components/pages/DocsPages/DocsSectionPage/DocsSectionPage';
-import DocsSubSectionPage from './components/pages/DocsPages/DocsSubSectionPage/DocsSubSectionPage';
-import DocsSectionIndexPage from './components/pages/DocsPages/DocsSectionPage/DocsSectionIndexPage';
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Documentation from './sites/Documentation/Documentation';
+import Community from './sites/Community/Community';
+import DocsSectionPage from './sites/Documentation/pages/DocsSectionPage/DocsSectionPage';
+import DocsSectionIndexPage from './sites/Documentation/pages/DocsSectionPage/DocsSectionIndexPage';
+import DocsSubSectionPage from './sites/Documentation/pages/DocsSubSectionPage/DocsSubSectionPage';
+import FlavoursPage from './sites/Documentation/pages/FlavoursPage/FlavoursPage';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -15,23 +16,16 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path="*" element={ <App /> }>
-          <Route path="docs" element={ <DocsMainPage /> }>
-            <Route index element={ <Navigate to="getting-started/installation" /> }/>
-            
-            <Route path=":sectionIdentifier" element={ <DocsSectionPage /> }>
-              <Route index element={ <DocsSectionIndexPage /> } />
-              <Route path=":subSectionIdentifier" element={ <DocsSubSectionPage /> } />
+        <Routes>
+            <Route path="*" element={ <App /> }>
+                <Route path="docs">
+                    <Route path="*" element={ <Documentation /> } />
+                </Route>
+                <Route path="community">
+                    <Route path="*" element={ <Community /> } />
+                </Route>
             </Route>
-            
-            <Route path="flavours" element={ <Outlet /> }>
-              <Route index element={ <FlavoursPage /> } />
-              <Route path=":flavour" element={ <FlavoursPage /> } />
-            </Route>
-          </Route>
-        </Route>
-      </Routes>
+        </Routes>
     </BrowserRouter>
   </React.StrictMode>
 );

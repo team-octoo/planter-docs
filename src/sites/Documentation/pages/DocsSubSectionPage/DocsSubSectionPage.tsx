@@ -1,0 +1,101 @@
+import { FC, PropsWithChildren, useEffect, useMemo } from 'react';
+import { useOutletContext, useParams } from 'react-router-dom';
+import { BookLoader, Button, Icon } from '../../../../components/basics';
+import { BreadCrumbNavBar } from '../../../../components/elements';
+import useDirectus from '../../../../state/hooks/useDirectus/useDirectus';
+import { MainSection, SubSection } from '../../../../types/documentation/sections';
+
+interface Props extends PropsWithChildren {};
+
+const DocsSubSectionPage: FC<Props> = ({ children }) => {
+    const { subSectionIdentifier } = useParams<any>();
+    const { mainSection } = useOutletContext<{ mainSection: MainSection | null }>();
+    const { data: requestedSubSection, refetch: refetchCurrentPage, loading: requestingSubSection } = useDirectus<SubSection[]>('articles', {
+        filter: {
+            'parent': mainSection?.id,
+            'uri': subSectionIdentifier
+        },
+        lazy: true,
+        fields: ['*', 'frameworks.frameworks_id.*']
+    }, 'loading');
+        
+    useEffect(() => {
+        if (subSectionIdentifier && !!mainSection) {
+            refetchCurrentPage();
+        }
+    }, [subSectionIdentifier])
+    
+    const subSection = useMemo(() => {
+        if (requestedSubSection) {
+            const [ mainSectionPageData ] = requestedSubSection;
+            return mainSectionPageData;
+        } else {
+            return null
+        }
+    }, [requestedSubSection]);
+    
+    const breadCrumbs = useMemo(() => ([
+        {
+            label: mainSection?.name || 'Main section',
+            to: mainSection?.uri || '#'
+        },
+        {
+            label: subSection?.name || 'Sub section',
+            to: subSection?.uri || '#'
+        },
+    ]), [mainSection, subSection])
+    
+    if (requestingSubSection) return (
+        <div className="h-full flex items-center justify-center px-12">
+            <BookLoader />
+        </div>
+    )
+    
+    else if (!subSection) return (
+        <div className="h-full flex items-center justify-center">
+            <div>
+                <Icon name="signal-wifi-error" size="2rem" className="mb-2 mx-auto" />
+                <h3 className="text-2xl font-medium text-center">Something went wrong</h3>
+                <p className="text-center text-stone-600">We couldn't retrieve documentation data</p>
+                <Button 
+                    className="mx-auto mt-4" icon="restart"
+                    onClick={() => window.location.reload()}
+                >Try again</Button>
+            </div>
+        </div>
+    )
+        
+    return (
+        <div className="px-12">
+            <div className="mb-4">
+                <BreadCrumbNavBar baseUri="docs" crumbs={ breadCrumbs } />
+            </div>
+            <div className="flex justify-between">
+                <div>
+                    <h1 className="text-2xl font-medium mb-1">{ subSection.name }</h1>
+                    <h2 className="text-lg font-medium text-stone-500">{ subSection.description }</h2>
+                </div>
+                { subSection?.framework_support && (
+                    <div>
+                        <h3 className="mb-2 text-right text-stone-600">Supported frameworks</h3>
+                        <ul className="text-right">
+                            { subSection.frameworks.map((framework) => (
+                                <li className="rounded-full px-3 py-1 border border-stone-300 inline-flex items-center ml-2">
+                                    <Icon name="code" size="1rem" className="mr-2" />
+                                    <span className="text-sm">{ framework.frameworks_id.name }</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+            </div>
+
+            <hr className="my-8" />
+            <div 
+                dangerouslySetInnerHTML={{ __html: subSection?.content || '' }} 
+            />
+        </div>
+    )
+}
+
+export default DocsSubSectionPage;

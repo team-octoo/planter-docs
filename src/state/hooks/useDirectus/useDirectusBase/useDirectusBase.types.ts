@@ -1,13 +1,8 @@
-interface UseDirectusBase {
-    data: any;
-    error: any;
-    loading: boolean;
-    
-    requestInitiated: (clearData?: boolean) => void;
-    setData: (data: any) => void;
-    clearData: () => void;
-    setError: (error: any) => void;
-    setLoading: (loading: boolean) => void;
-}
+import { Directus, DirectusOptions } from "@directus/sdk";
+
+// interface IDirectusStateProperties {}
+
+type IDirectusState = [ Directus<any> ];
+type UseDirectusBase = (options?: DirectusOptions) => IDirectusState;
 
 export default UseDirectusBase;
