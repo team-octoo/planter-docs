@@ -8,7 +8,7 @@ interface Props {};
 
 const Header: FC<Props> = () => {
     return (
-        <BaseHeader>
+        <BaseHeader sectionSlug="Docs">
             <div className="flex items-center justify-between gap-6 h-full">
                 <div className="w-full">
                     <GlobalSearch />

@@ -24,8 +24,13 @@ const useDirectusAuth = () => {
         }
     }
     
+    const logout = async () => {
+        return await directus.auth.logout();
+    }
+    
     return {
         login,
+        logout,
         token,
         loading,
         error

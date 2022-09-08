@@ -22,30 +22,40 @@ const LoginPage: FC<Props> = () => {
     else if (token) return <Navigate to=".." />
     
     return (
-        <div className="relative h-full flex items-center justify-center p-10">
-            <div className="min-w-[25vw] h-full flex flex-col">
-                <div className="flex-1 flex flex-col justify-center">
-                    <div className="mb-6">
-                        <Icon name="account-circle" size="2rem" className="mb-2 mx-auto" />
-                        <h3 className="text-2xl font-medium text-center">Welcome back!</h3>
-                        <p className="text-center text-stone-600">Login or register to join our community</p>
+        <div className="relative h-full flex flex-col items-center justify-center p-10">
+            <div className="min-w-[25vw] h-full flex-1 flex flex-col justify-center">
+                <div className="mb-6">
+                    <Icon name="account-circle" size="2rem" className="mb-2 mx-auto" />
+                    <h3 className="text-2xl font-medium text-center">Welcome back!</h3>
+                    <p className="text-center text-stone-600">Login or register to join our community</p>
+                </div>
+                <ControlledForm onSubmit={ handleLogin }>
+                    <div className="mb-4">
+                        <Input name="email" placeholder="Email" autoFocus />
                     </div>
-                    <ControlledForm onSubmit={ handleLogin }>
-                        <div className="mb-4">
-                            <Input name="email" placeholder="Email" autoFocus />
-                        </div>
-                        <div>
-                            <Input name="password" placeholder="Password" type="password" />
-                        </div>
-                        <Button type="submit" className="mx-auto mt-4" icon="arrow-right">Login</Button>
-                    </ControlledForm>
+                    <div>
+                        <Input name="password" placeholder="Password" type="password" />
+                    </div>
+                    <Button 
+                        type="submit" 
+                        className="mx-auto mt-4" 
+                        icon="arrow-right"
+                        disabled={ loading }
+                    >Login</Button>
+                </ControlledForm>
+            </div>
+            <div className="flex items-center justify-between gap-14 border border-stone-300 p-6 rounded-lg">
+                <div>
+                    <h3 className="font-medium text-lg">Don't have an account (yet)?</h3>
+                    <p className="text-stone-600">Sign up to contribute to our community</p>
                 </div>
-                <div className="mt-10">
-                    <a href="https://octoo.be" target="_blank" rel="noreffer noopener">
-                        <p className="text-sm text-stone-500 mb-1 text-center">A project from</p>
-                        <LogoOctoo className="w-28 opacity-50 mx-auto" />
-                    </a>
-                </div>
+                <Button icon="arrow-right">Register here</Button>
+            </div>
+            <div className="mt-10">
+                <a href="https://octoo.be" target="_blank" rel="noreffer noopener">
+                    <p className="text-sm text-stone-500 mb-1 text-center">A project from</p>
+                    <LogoOctoo className="w-28 opacity-50 mx-auto" />
+                </a>
             </div>
         </div>
     )
