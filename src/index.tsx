@@ -9,6 +9,8 @@ import DocsSectionPage from './sites/Documentation/pages/DocsSectionPage/DocsSec
 import DocsSectionIndexPage from './sites/Documentation/pages/DocsSectionPage/DocsSectionIndexPage';
 import DocsSubSectionPage from './sites/Documentation/pages/DocsSubSectionPage/DocsSubSectionPage';
 import FlavoursPage from './sites/Documentation/pages/FlavoursPage/FlavoursPage';
+import Main from './sites/Main/Main';
+import ConfigurationExportPage from './sites/Documentation/pages/ConfigurationExportPage/ConfigurationExportPage';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -19,10 +21,13 @@ root.render(
         <Routes>
             <Route path="*" element={ <App /> }>
                 <Route path="docs">
-                    <Route path="*" element={ <Documentation /> } />
+                  <Route path="*" element={ <Documentation /> } />
                 </Route>
                 <Route path="community">
-                    <Route path="*" element={ <Community /> } />
+                  <Route path="*" element={ <Community /> } />
+                </Route>
+                <Route path="*">
+                  <Route path="*" element={ <Main /> } />
                 </Route>
             </Route>
         </Routes>

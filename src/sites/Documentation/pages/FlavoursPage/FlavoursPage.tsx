@@ -2,6 +2,7 @@ import { FC, PropsWithChildren } from 'react';
 import useDirectus from '../../../../state/hooks/useDirectus/useDirectus';
 import { Flavour, Framework } from '../../../../types/documentation/flavours';
 import { Icon } from '../../../../components/basics';
+import { Link } from 'react-router-dom';
 
 interface Props {}
 
@@ -38,10 +39,10 @@ const FlavoursPage: FC<PropsWithChildren<Props>> = (props) => {
                 { flavour.description }
               </p>
             </div>
-            <a href="#" target="_blank" className="flex items-baseline" rel="noreferrer">
+            <Link to={`/docs/flavours/export/${flavour.id}.json`} className="flex items-baseline" rel="noreferrer">
               <Icon name="arrow-right-down" className="translate-y-1 mr-1" />
               <span className="underline underline-offset-[3px]">Get configuration</span>
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

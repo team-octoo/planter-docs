@@ -2,6 +2,7 @@ import { FC, PropsWithChildren, useEffect, useMemo } from 'react';
 import { useOutletContext, useParams } from 'react-router-dom';
 import { BookLoader, Button, Icon } from '../../../../components/basics';
 import { BreadCrumbNavBar } from '../../../../components/elements';
+import ErrorPageLayout from '../../../../components/layouts/ErrorPageLayout/ErrorPageLayout';
 import useDirectus from '../../../../state/hooks/useDirectus/useDirectus';
 import { MainSection, SubSection } from '../../../../types/documentation/sections';
 
@@ -51,19 +52,7 @@ const DocsSubSectionPage: FC<Props> = ({ children }) => {
         </div>
     )
     
-    else if (!subSection) return (
-        <div className="h-full flex items-center justify-center">
-            <div>
-                <Icon name="signal-wifi-error" size="2rem" className="mb-2 mx-auto" />
-                <h3 className="text-2xl font-medium text-center">Something went wrong</h3>
-                <p className="text-center text-stone-600">We couldn't retrieve documentation data</p>
-                <Button 
-                    className="mx-auto mt-4" icon="restart"
-                    onClick={() => window.location.reload()}
-                >Try again</Button>
-            </div>
-        </div>
-    )
+    else if (!subSection) return <ErrorPageLayout />
         
     return (
         <div className="px-12">

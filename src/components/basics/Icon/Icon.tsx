@@ -18,7 +18,7 @@ interface Props extends SvgProps {
  */
 const Icon: FC<Props> = ({ color = 'currentColor', size = '1.3rem', fill, noStyle, name = 'admin', className }) => {
     const nameAndStyleSeperator = noStyle ? '' : '-';
-    const iconStyle = fill ? 'fill' : 'line';
+    const iconStyle = noStyle ? '': fill ? 'fill' : 'line';
     const iconName = `${ name }${ nameAndStyleSeperator }${ iconStyle }`;
     
     return (

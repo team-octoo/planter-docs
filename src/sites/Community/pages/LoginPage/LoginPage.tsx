@@ -18,7 +18,6 @@ const LoginPage: FC<Props> = () => {
     }
     
     if (loading) return <>Loading</>
-    
     else if (token) return <Navigate to=".." />
     
     return (

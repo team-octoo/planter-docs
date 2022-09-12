@@ -5,6 +5,7 @@ import { Icon } from '../../components/basics';
 import CenteringLayout from '../../components/layouts/CenteringLayout';
 import Header from './components/Header/Header';
 import SideMenu from './components/SideMenu/SideMenu';
+import ConfigurationExportPage from './pages/ConfigurationExportPage/ConfigurationExportPage';
 import DocsMainPage from './pages/DocsMainPage/DocsMainPage';
 import DocsSectionIndexPage from './pages/DocsSectionPage/DocsSectionIndexPage';
 import DocsSectionPage from './pages/DocsSectionPage/DocsSectionPage';
@@ -48,7 +49,8 @@ const Documentation: FC<Props> = ({ children }) => {
                         
                             <Route path="flavours">
                                 <Route index element={ <FlavoursPage /> } />
-                                <Route path=":flavour" element={ <FlavoursPage /> } />
+                                <Route path=":category" element={ <FlavoursPage /> } />
+                                <Route path="export/:flavourId.json" element={ <ConfigurationExportPage /> } />
                             </Route>
                         </Routes>
                     </main>

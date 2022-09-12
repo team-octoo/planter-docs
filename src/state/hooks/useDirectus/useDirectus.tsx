@@ -1,7 +1,7 @@
 import { Directus, QueryMany } from '@directus/sdk';
 import { useCallback, useState } from 'react';
 import { useEffectOnce } from '../useEffectOnce/useEffectOnce';
-import UseDirectus from './useDirectus.types';
+import UseDirectus, { DirectusRequestOptions } from './useDirectus.types';
 import useDirectusBase from './useDirectusBase/useDirectusBase';
 
 const useDirectus: UseDirectus = <T, >(collection: any, options: any, dataClearingPolicy = 'refresh') => {
@@ -20,7 +20,6 @@ const useDirectus: UseDirectus = <T, >(collection: any, options: any, dataCleari
             clearData();
         }
     }
-
     
     const requestCompleted = () => {
         setLoading(false);
@@ -43,19 +42,34 @@ const useDirectus: UseDirectus = <T, >(collection: any, options: any, dataCleari
         }
     }, [dataClearingPolicy])
     
+    const baseRequest = useCallback((requestOptions: any) => {
+        const { single, id, ...otherOptions } = requestOptions;
+        
+        const requestedCollection = directus.items(collection);
+                
+        if (single) {
+            return requestedCollection.readOne(id, otherOptions)
+        } else {
+            return requestedCollection.readByQuery(otherOptions)
+        }
+    }, [collection, options])
+    
     const request = useCallback((customOptions?: any) => {
-        delete options?.lazy
-        delete customOptions?.lazy
+        const requestOptions = {
+            ...options,
+            ...customOptions,
+        }
+        
+        delete requestOptions?.lazy;
         
         requestInitiated();
-        directus
-            .items(collection)
-            .readByQuery({
-                ...options,
-                ...customOptions,
-            })
+        baseRequest(requestOptions)
             .then(response => {
-                onSuccess(response.data as unknown as T)
+                if (requestOptions.single) {
+                    onSuccess(response as unknown as T)
+                } else {
+                    onSuccess(response?.data as unknown as T)
+                }
             })
             .catch(error => onError(error))
     }, [collection, options])

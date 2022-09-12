@@ -5,4 +5,5 @@ export interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
     icon?: string;
     iconPlacement?: 'start' | 'end';
     theme?: 'main' | 'secondary';
+    to?: string;
 };

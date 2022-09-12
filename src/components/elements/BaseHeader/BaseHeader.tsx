@@ -1,8 +1,9 @@
 import { FC, PropsWithChildren } from 'react';
+import { Link } from 'react-router-dom';
 import { LogoOctooMarker } from '../../basics';
 
 interface Props extends PropsWithChildren {
-    sectionSlug: string;
+    sectionSlug?: string;
 };
 
 const BaseHeader: FC<Props> = ({ children, sectionSlug }) => {
@@ -15,8 +16,10 @@ const BaseHeader: FC<Props> = ({ children, sectionSlug }) => {
                         <a href="https://github.com/team-octoo" target="_blank" rel="noopener noreferrer">
                             <LogoOctooMarker className="h-4" />
                         </a>
-                        <span className="text-sm text-stone-500">/</span>
-                        <h1 className="font-semibold tracking-wide text-lg">Planter</h1>
+                        <Link to="/" className="flex items-center gap-2">
+                            <span className="text-sm text-stone-500">/</span>
+                            <h1 className="font-semibold tracking-wide text-lg">Planter</h1>
+                        </Link>
                         { sectionSlug && (
                             <>
                                 <span className="text-sm text-stone-500">/</span>

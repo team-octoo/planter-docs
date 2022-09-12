@@ -1,10 +1,12 @@
 import { Filter } from '@directus/sdk';
 
-interface DirectusRequestOptions {
+export interface DirectusRequestOptions {
     fields?: string | string[];
     filter?: Filter<{ [key: string]: string | boolean | number }>;
     search?: string;
     limit?: number;
+    single?: boolean;
+    id?: string | number;
 }
 
 interface QueryOptions extends DirectusRequestOptions {
