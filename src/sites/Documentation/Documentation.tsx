@@ -10,6 +10,7 @@ import DocsMainPage from './pages/DocsMainPage/DocsMainPage';
 import DocsSectionIndexPage from './pages/DocsSectionPage/DocsSectionIndexPage';
 import DocsSectionPage from './pages/DocsSectionPage/DocsSectionPage';
 import DocsSubSectionPage from './pages/DocsSubSectionPage/DocsSubSectionPage';
+import FlavourDetailPage from './pages/FlavoursPage/FlavourDetailPage/FlavourDetailPage';
 import FlavoursPage from './pages/FlavoursPage/FlavoursPage';
 
 interface Props extends PropsWithChildren {};
@@ -49,8 +50,9 @@ const Documentation: FC<Props> = ({ children }) => {
                         
                             <Route path="flavours">
                                 <Route index element={ <FlavoursPage /> } />
-                                <Route path=":category" element={ <FlavoursPage /> } />
-                                <Route path="export/:flavourId.json" element={ <ConfigurationExportPage /> } />
+                                <Route path="category/:flavour" element={ <FlavoursPage /> } />
+                                <Route path=":flavourId" element={ <FlavourDetailPage /> } />
+                                <Route path=":flavourId.json" element={ <ConfigurationExportPage /> } />
                             </Route>
                         </Routes>
                     </main>

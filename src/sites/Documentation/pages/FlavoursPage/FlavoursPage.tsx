@@ -39,7 +39,7 @@ const FlavoursPage: FC<PropsWithChildren<Props>> = (props) => {
                 { flavour.description }
               </p>
             </div>
-            <Link to={`/docs/flavours/export/${flavour.id}.json`} className="flex items-baseline" rel="noreferrer">
+            <Link to={`/docs/flavours/${flavour.id}`} className="flex items-baseline" rel="noreferrer">
               <Icon name="arrow-right-down" className="translate-y-1 mr-1" />
               <span className="underline underline-offset-[3px]">Get configuration</span>
             </Link>

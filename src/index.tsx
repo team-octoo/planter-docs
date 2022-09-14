@@ -20,15 +20,9 @@ root.render(
     <BrowserRouter>
         <Routes>
             <Route path="*" element={ <App /> }>
-                <Route path="docs">
-                  <Route path="*" element={ <Documentation /> } />
-                </Route>
-                <Route path="community">
-                  <Route path="*" element={ <Community /> } />
-                </Route>
-                <Route path="*">
-                  <Route path="*" element={ <Main /> } />
-                </Route>
+                <Route path="docs/*" element={ <Documentation /> }/>
+                <Route path="community/*" element={ <Community /> } />
+                <Route path="*"  element={ <Main /> } />
             </Route>
         </Routes>
     </BrowserRouter>

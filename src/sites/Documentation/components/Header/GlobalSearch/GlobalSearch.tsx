@@ -73,8 +73,8 @@ const GlobalSearch = () => {
             >
                 <div className={classNames(
                     'flex items-center gap-2 rounded-full py-3 px-4',
-                    'bg-gradient-to-r via-stone-100 to-transparent',
-                    searchActive ? 'max-w-full from-transparent' : 'max-w-xl from-stone-100'
+                    'bg-gradient-to-r  to-transparent',
+                    searchActive ? 'max-w-full from-transparent via-transparent' : 'max-w-xl from-stone-100 via-stone-100'
                 )}>
                     <Icon name="search" size="1rem" className="text-stone-400" />
                     <input 

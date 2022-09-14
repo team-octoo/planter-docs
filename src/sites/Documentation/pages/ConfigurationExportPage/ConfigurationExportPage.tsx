@@ -1,45 +1,15 @@
-import { FC, useMemo } from 'react';
+import { FC, PropsWithChildren, useCallback, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useUA } from 'use-ua-parser-js';
-import { BookLoader, Button, Icon } from '../../../../components/basics';
-import { BreadCrumbNavBar } from '../../../../components/elements';
-import ErrorPageLayout from '../../../../components/layouts/ErrorPageLayout/ErrorPageLayout';
+import { Button, Icon } from '../../../../components/basics';
+import useBlob from '../../../../state/hooks/useBlob/useBlob';
 import useDirectus from '../../../../state/hooks/useDirectus/useDirectus';
-import { useEffectOnce } from '../../../../state/hooks/useEffectOnce/useEffectOnce';
 import { Flavour } from '../../../../types/documentation/flavours';
-import { BreadCrumb } from '../../../../types/navigation/breadcrumbs';
+import { validatedJsonTemplate } from '../../../../utils/funcs';
 
 interface Props {};
 
-const IDButton: FC<{ id: string }> = ({ id }) => {
-    return (
-        <div className="group rounded-full px-3 py-1 border border-stone-300 flex items-center w-fit select-all">
-            <Icon name="hashtag" noStyle size="1rem" />
-            <span className="text-sm select-none">ID</span>
-            <div className="ml-0 group-hover:ml-2"></div>
-            <span className="text-sm text-stone-600 duration-400 whitespace-nowrap overflow-hidden max-w-[0vw] group-hover:max-w-[100vw]">{ id }</span>
-        </div>
-    )
-}
-
 const ConfigurationExportPage: FC<Props> = () => {
-    const UADetails = useUA();
-    const isMacOs = UADetails?.os.name === 'Mac OS';
-    
-    const saveCommand = (e: KeyboardEvent) => {
-        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
-            // Prevent the Save dialog to open
-            e.preventDefault();
-            // Place your code here
-            console.log('CTRL + S');
-          }
-    }
-    
-    useEffectOnce(() => {
-        document.addEventListener('keydown', saveCommand);
-        return () => document.removeEventListener('keydown', saveCommand);
-    })
-        
+    const blob = useBlob(undefined, 'application/json;charset=utf-8')
     const { flavourId } = useParams<any>();
     const { data: flavour, loading: requestingFlavour, error: requestFlavourError } = useDirectus<Flavour>('flavours', {
         id: flavourId,
@@ -47,59 +17,43 @@ const ConfigurationExportPage: FC<Props> = () => {
         fields: ['*.*.*']
     });
     
-    const crumbs = useMemo<BreadCrumb[]>(() => {
-        return [
-            { label: 'Flavours', to: 'flavours' },
-            { label: 'Export', to: 'export' },
-            { label: `(${flavour?.framework.name}) ${flavour?.name}` || '' },
-        ]
+    const saveFile = useCallback(() => {
+        const validJsonString = validatedJsonTemplate(flavour?.template || '{}')
+        blob.setContent([validJsonString]);
+        blob.save('planter.config.json');
     }, [flavour])
     
-    if (requestFlavourError) return (
-        <ErrorPageLayout
-            icon="file-damage" 
-            requestUnit="configuration" 
-            error="This configuration doesn't exist"
-            action={<Button icon="arrow-right" to="/docs/flavours">View flavours</Button>}
-        />
-    )
+    useEffect(() => {
+        if (flavour?.template) {
+            setTimeout(() => {
+                saveFile();
+            }, 1000);
+        }
+    }, [flavour])
     
-    else if (requestingFlavour || !flavour) return (
-        <div className="h-full flex items-center justify-center px-12">
-            <BookLoader />
+    if (requestingFlavour) return (
+        <div className="h-full flex items-center justify-center">
+            <div>
+                <div className="animate-spin mb-2 mx-auto w-fit">
+                    <Icon name="loader-5" size="2rem" className="" />
+                </div>
+                <h3 className="text-2xl font-medium text-center">Preparing download</h3>
+                <p className="text-center text-stone-600">Getting the configuration file</p>
+            </div>
         </div>
     )
-    
-    else return (
-        <div className="px-12 w-full">
-            <div className="w-full">
-                <div className="mb-4">
-                    <BreadCrumbNavBar baseUri="docs" crumbs={ crumbs } />
+
+    return (
+        <div className="h-full flex items-center justify-center">
+            <div>
+                <Icon name="download" size="2rem" className="mb-2 mx-auto" />
+                <h3 className="text-2xl font-medium text-center">Download started</h3>
+                <p className="text-center text-stone-600">Downloading configuration file – { flavour?.name }</p>
+                <div className="mx-auto mt-4 w-fit flex gap-3">
+                    <Button icon="arrow-left" iconPlacement="start" to={'../' + flavourId}>Flavour details</Button>
+                    <Button icon="restart" onClick={ saveFile }>Download again</Button>
                 </div>
-                <div className="flex justify-between">
-                    <div>
-                        <h1 className="text-2xl font-medium mb-1">{ flavour.name }</h1>
-                        <h2 className="text-lg font-medium text-stone-500">{ flavour?.description }</h2>
-                        {/* <div className="mt-2">
-                            <IDButton id={ flavour.id } />
-                        </div> */}
-                    </div>
-                    <div>
-                        <h3 className="mb-2 text-right text-stone-600">Supported frameworks</h3>
-                        <div className="rounded-full px-3 py-1 border border-stone-300 flex items-center ml-auto w-fit">
-                            <Icon name="code" size="1rem" className="mr-2" />
-                            <span className="text-sm">{ flavour.framework.name }</span>
-                        </div>
-                    </div>
-                </div>
-              </div>
-              <hr className="my-8" />
-              <div className="flex items-center gap-3">
-                <Button icon="download">Save configuration</Button>
-                <span className="text-stone-600">or</span>
-                <span className="text-stone-600">
-                    { isMacOs ? <kbd>⌘</kbd> : <kbd>crtl</kbd> } + <kbd>s</kbd></span>
-              </div>
+            </div>
         </div>
     )
 }

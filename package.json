@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@my-project/outside-dist": "file:./tailwind.config.js",
     "@directus/sdk": "^10.1.4",
     "@formkit/auto-animate": "^1.0.0-beta.3",
     "@team-octoo/planter": "file:..",
@@ -19,6 +20,7 @@
     "debounce": "^1.2.1",
     "immer": "^9.0.15",
     "react": "^18.2.0",
+    "react-code-blocks": "^0.0.9-0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.34.2",
     "react-router-dom": "^6.3.0",

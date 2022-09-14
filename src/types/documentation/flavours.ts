@@ -8,4 +8,5 @@ export interface Flavour {
     recommended: boolean;
     info: string;
     description?: string;
+    template: string | null;
 }

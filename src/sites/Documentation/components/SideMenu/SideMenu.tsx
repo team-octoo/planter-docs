@@ -39,8 +39,8 @@ const SideMenu: FC<Props> = ({ baseUri, open }) => {
         icon: 'folders',
         uri: 'flavours',
         sections: [
-          { name: 'Default flavours', uri: 'default' },
-          { name: 'Custom flavours', uri: 'custom' },
+          { name: 'Default flavours', uri: 'category/default' },
+          { name: 'Custom flavours', uri: 'category/custom' },
         ]
       },
     ]
