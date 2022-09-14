@@ -50,7 +50,7 @@ const ConfigurationExportPage: FC<Props> = () => {
                 <h3 className="text-2xl font-medium text-center">Download started</h3>
                 <p className="text-center text-stone-600">Downloading configuration file – { flavour?.name }</p>
                 <div className="mx-auto mt-4 w-fit flex gap-3">
-                    <Button icon="arrow-left" iconPlacement="start" to={'../' + flavourId}>Flavour details</Button>
+                    <Button icon="arrow-left" iconPlacement="start" to="..">Flavour details</Button>
                     <Button icon="restart" onClick={ saveFile }>Download again</Button>
                 </div>
             </div>

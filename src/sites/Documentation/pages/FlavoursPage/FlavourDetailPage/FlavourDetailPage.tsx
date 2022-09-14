@@ -1,6 +1,6 @@
 import { FC, useLayoutEffect, useMemo } from 'react';
 import { CodeBlock, github } from 'react-code-blocks';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useUA } from 'use-ua-parser-js';
 import { BookLoader, Button, Icon } from '../../../../../components/basics';
 import { BreadCrumbNavBar } from '../../../../../components/elements';
@@ -40,7 +40,6 @@ const FlavourDetailPage: FC<Props> = () => {
     const crumbs = useMemo<BreadCrumb[]>(() => {
         return [
             { label: 'Flavours', to: 'flavours' },
-            { label: 'Export', to: 'export' },
             { label: `(${flavour?.framework.name}) ${flavour?.name}` || '' },
         ]
     }, [flavour])
@@ -117,7 +116,9 @@ const FlavourDetailPage: FC<Props> = () => {
                 </div> */}
             </div>
             <div className="flex justify-end items-center gap-3 mt-8">
-                <Button icon="download" to={`../${ flavourId }.json`}>Save configuration</Button>
+                <Link to="planter.config.json">
+                    <Button icon="download">Save configuration</Button>
+                </Link>
                 <span className="text-stone-600">or</span>
                 <span className="text-stone-600">
                     { isMacOs ? <kbd>⌘</kbd> : <kbd>crtl</kbd> } + <kbd>C</kbd> to copy

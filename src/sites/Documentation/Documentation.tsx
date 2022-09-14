@@ -51,8 +51,10 @@ const Documentation: FC<Props> = ({ children }) => {
                             <Route path="flavours">
                                 <Route index element={ <FlavoursPage /> } />
                                 <Route path="category/:flavour" element={ <FlavoursPage /> } />
-                                <Route path=":flavourId" element={ <FlavourDetailPage /> } />
-                                <Route path=":flavourId.json" element={ <ConfigurationExportPage /> } />
+                                <Route path=":flavourId">
+                                    <Route index element={ <FlavourDetailPage /> } />
+                                    <Route path="planter.config.json" element={ <ConfigurationExportPage /> } />
+                                </Route>
                             </Route>
                         </Routes>
                     </main>
