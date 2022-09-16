@@ -16,7 +16,6 @@ const InputWrapper = tw.label<InputWrapperProps>`
     relative
     border-[1.5px]
     rounded-lg
-    mt-4
     transition-all
     ease-linear
     border-opacity-30

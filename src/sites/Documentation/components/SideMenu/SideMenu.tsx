@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react';
+import { FC, useMemo, useState } from 'react';
 import useDirectus from '../../../../state/hooks/useDirectus/useDirectus';
 import { MainSection } from '../../../../types/documentation/sections';
 import Aside from './Aside/Aside';
@@ -12,6 +12,7 @@ interface Props {
 }
 
 const SideMenu: FC<Props> = ({ baseUri, open }) => {
+  const [ currentOpen, setCurrentOpen ] = useState<string | null>(null)
   const { data: articles } = useDirectus('sections', {
     fields: ['*', 'sections.uri', 'sections.name']
   });
@@ -57,9 +58,14 @@ const SideMenu: FC<Props> = ({ baseUri, open }) => {
             { sections.map((section, index) => (
               <li 
                 key={ index }
+                onClick={() => setCurrentOpen(section.id)}
                 className="mb-2 last:mb-0 whitespace-nowrap"
               >
-                <MenuSection baseUri={ baseUri } { ...section } />
+                <MenuSection 
+                  baseUri={ baseUri } 
+                  open={ section.id === currentOpen } 
+                  { ...section }
+                />
               </li>
             ))}
           </ul>

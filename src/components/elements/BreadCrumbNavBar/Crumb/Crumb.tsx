@@ -12,7 +12,7 @@ const Crumb: FC<Props> = ({ breadcrumb }) => {
         <li className="inline-flex items-center group">
             <Link
                 to={ breadcrumb.to || '#' } 
-                className="text-stone-500 hover:underline underline-offset-2 group-last:text-opacity-50 group-last:pointer-events-none"
+                className="text-stone-500 hover:underline underline-offset-2 group-last:text-opacity-70 group-last:pointer-events-none"
             >{ breadcrumb.label }</Link>
             <Icon name="arrow-right-s" className="text-stone-400 group-last:hidden" />
         </li>

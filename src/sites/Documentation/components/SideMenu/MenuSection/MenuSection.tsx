@@ -8,13 +8,10 @@ import SubSection from '../SubSection/SubSection';
 
 interface Props extends MainSection {
     baseUri: string;
+    open: boolean;
 }
 
-const MenuSection: FC<Props> = ({ name, icon, sections, uri, baseUri }) => {
-    const [ open, setOpen ] = useState(false);
-    
-    const toggleCollapse = () => setOpen(s => !s);
-    
+const MenuSection: FC<Props> = ({ name, icon, sections, uri, baseUri, open }) => {
     const composedUri = useMemo(() => baseUri + '/' + uri, [uri, baseUri])
     
     return (
@@ -22,7 +19,6 @@ const MenuSection: FC<Props> = ({ name, icon, sections, uri, baseUri }) => {
             <div>
                 <Link
                     to={ composedUri }
-                    onClick={() => sections?.length !== 0 && toggleCollapse()}
                     className={classNames(
                         'flex items-center mb-2',
                         open ? 'text-black' : 'text-stone-500'
@@ -40,7 +36,7 @@ const MenuSection: FC<Props> = ({ name, icon, sections, uri, baseUri }) => {
                     </div>
                     <span className="text-lg font-medium group-hover:text-black">{ name }</span>
                 </Link>
-                { sections && (
+                {( sections && sections?.length > 0 ) && (
                     <ExspansionPane active={ open }>
                         <SubSection level={ 1 } sections={ sections } baseUri={ composedUri } />
                     </ExspansionPane>

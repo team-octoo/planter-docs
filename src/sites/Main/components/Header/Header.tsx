@@ -1,11 +1,13 @@
 import { FC, PropsWithChildren } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Icon } from '../../../../components/basics';
 import { BaseHeader } from '../../../../components/elements';
 
 interface Props extends PropsWithChildren {};
 
 const Header: FC<Props> = () => {
+    
+    
     return (
         <BaseHeader>
             <div className="flex items-center justify-end gap-3 h-full">

@@ -2,6 +2,7 @@ import { FC, PropsWithChildren, useState } from 'react';
 import { Icon } from '../../../../components/basics';
 import BaseModule from './BaseModule';
 import AccountOverviewModule from './modules/AccountOverviewModule';
+import DiscoverabilityModule from './modules/DiscoverabilityModule';
 import UserNameModule from './modules/UserNameModule';
 
 interface Props extends PropsWithChildren {};
@@ -42,7 +43,7 @@ const AccountPage: FC<Props> = ({ children }) => {
                 {
                     label: 'Discoverability',
                     description: 'Chose wether other users can view your profile',
-                    render: <AccountOverviewModule />,    
+                    render: <DiscoverabilityModule />,    
                     collapse: true,     
                 },
             ]
@@ -62,7 +63,7 @@ const AccountPage: FC<Props> = ({ children }) => {
                     label: 'Settting 2',
                     description: 'Lorem ipsum dolor sit amet, consectetur adipisicing.',
                     render: <>Setting module</>,    
-                    collapse: true,     
+                    collapse: true,
                 },
             ]
         },

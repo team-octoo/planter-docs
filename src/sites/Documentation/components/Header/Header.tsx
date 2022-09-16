@@ -13,10 +13,16 @@ const Header: FC<Props> = () => {
                 <div className="w-full">
                     <GlobalSearch />
                 </div>
-                <Link to="/community" className="flex items-center gap-2 py-2 px-3 border border-stone-300 rounded-full">
-                    <Icon name="group-2" />
-                    <span className="font-medium">Community</span>
-                </Link>
+                <div className="flex gap-3">
+                    <a href="https://github.com/team-octoo/planter-cli" target="_blank" className="flex items-center gap-2 py-2 px-3 border border-stone-300 rounded-full">
+                        <Icon name="github" />
+                        <span className="font-medium">GitHub</span>
+                    </a>
+                    <Link to="/community" className="flex items-center gap-2 py-2 px-3 border border-stone-300 rounded-full">
+                        <Icon name="group-2" />
+                        <span className="font-medium">Community</span>
+                    </Link>
+                </div>
             </div>
         </BaseHeader>
     )

@@ -10,16 +10,14 @@ interface Props {
 };
 
 const BreadCrumbNavBar: FC<Props> = ({ crumbs, baseUri }) => {  
+    const mergedCrumbsWithStartpage = useMemo(() => ([
+        { label: 'Docs', to: '.' },
+        ...crumbs
+    ]), [crumbs])
+    
     return (
         <ul className="whitespace-nowrap">
-             <li className="inline-flex items-center group">
-                <Link
-                    to="/docs" 
-                    className="text-stone-500 hover:underline underline-offset-2 group-last:text-opacity-50 group-last:pointer-events-none"
-                >Docs</Link>
-                <Icon name="arrow-right-s" className="text-stone-400 group-last:hidden" />
-            </li>
-            { crumbs.map((breadcrumb, index) => {
+            { mergedCrumbsWithStartpage.map((breadcrumb, index) => {
                 breadcrumb = {
                     ...breadcrumb,
                     to: '/' + baseUri + '/' + breadcrumb.to
