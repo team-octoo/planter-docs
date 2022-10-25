@@ -1,6 +1,7 @@
 import { FC, useLayoutEffect, useMemo } from 'react';
 import { CodeBlock, github } from 'react-code-blocks';
 import { Link, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { useUA } from 'use-ua-parser-js';
 import { BookLoader, Button, Icon } from '../../../../../components/basics';
 import { BreadCrumbNavBar } from '../../../../../components/elements';
@@ -12,17 +13,6 @@ import { Flavour } from '../../../../../types/documentation/flavours';
 import { BreadCrumb } from '../../../../../types/navigation/breadcrumbs';
 import { validatedJsonTemplate } from '../../../../../utils/funcs';
 import theme from '../../../../../utils/vendors/codeblock/theme';
-
-const IDButton: FC<{ id: string }> = ({ id }) => {
-    return (
-        <div className="group rounded-full px-3 py-1 border border-stone-300 flex items-center w-fit select-all">
-            <Icon name="hashtag" noStyle size="1rem" />
-            <span className="text-sm select-none">ID</span>
-            <div className="ml-0 group-hover:ml-2"></div>
-            <span className="text-sm text-stone-600 duration-400 whitespace-nowrap overflow-hidden max-w-[0vw] group-hover:max-w-[100vw]">{ id }</span>
-        </div>
-    )
-}
 
 interface Props {};
 
@@ -55,7 +45,12 @@ const FlavourDetailPage: FC<Props> = () => {
             e.preventDefault();
             const te = validatedJsonTemplate(flavour?.template || '{}');
             clipboard.write(te)
+            
+            toast('Test 3', {
+                autoClose: 500000
+            })
         }
+        
     }
     
     useLayoutEffect(() => {

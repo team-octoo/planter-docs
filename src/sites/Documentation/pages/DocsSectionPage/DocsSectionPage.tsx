@@ -1,5 +1,5 @@
 import { FC, useEffect, useMemo } from 'react';
-import { Link, Outlet, useParams } from 'react-router-dom';
+import { Link, Outlet, useLoaderData, useParams } from 'react-router-dom';
 import { BookLoader } from '../../../../components/basics';
 import useDirectus from '../../../../state/hooks/useDirectus/useDirectus';
 import { MainSection } from '../../../../types/documentation/sections';

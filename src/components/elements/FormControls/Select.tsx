@@ -1,4 +1,6 @@
+import classNames from 'classnames';
 import { FC, PropsWithChildren } from 'react';
+import styled from 'styled-components';
 import tw from 'tailwind-styled-components';
 import FieldWrapper from './FieldWrapper';
 import { FormControlInputProps } from './FormControls.types';
@@ -28,17 +30,8 @@ const SelectField = FieldWrapper(tw.select`
    pl-2
 `);
 
-const Label = tw.span<GeneralProps>`
-    absolute
-    top-0
-    left-2
-    font-medium
-    -translate-y-1/2
-    -translate-[.3rem]
-    text-[.8rem]
-    px-[.3rem]
-    bg-white
-    ${ (props: GeneralProps) => props.isDisabled ? 'cursor-not-allowed opacity-50' : '' }
+const Label = styled.span<GeneralProps>`
+    background: linear-gradient(180deg, rgba(255,255,255,0) calc(50% - 2px), rgba(255,255,255,1) calc(50% - 2px));
 `;
 
 interface Props extends FormControlInputProps {
@@ -58,6 +51,10 @@ const Select: FC<Props> = ({ children, label, ...otherProps }) => {
             </SelectField>
             { label && (
                 <Label 
+                    className={classNames(
+                        'absolute top-0 left-2 font-medium -translate-y-1/2 -translate-[.3rem] text-[.8rem] px-[.3rem] bg-white',
+                        generalProperties.isDisabled && 'cursor-not-allowed opacity-50'
+                    )}
                     { ...generalProperties }
                 >{ label }{ otherProps.required && '*' }</Label>
             )}

@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "react-toastify/dist/ReactToastify.css";
+
 * {
     @apply transition-all duration-200;
 }
@@ -43,4 +45,57 @@ kbd {
 
 .contain-paint {
     contain: paint;
+}
+
+.Toastify__toast-container {
+    padding: 0;
+    
+    &--bottom-center {
+        bottom: 0;
+    }
+    
+    .Toastify__toast {
+        transform: translateY(1rem);
+        opacity: 0;
+        
+        &:nth-last-child(1) {
+            transform: scale(1) translateY(0rem);
+            opacity: 1;
+        }
+        &:nth-last-child(2) {
+            transform: scale(.95) translateY(4rem);
+            opacity: 1;
+        }
+        &:nth-last-child(3) {
+            transform: scale(.9) translateY(8.5rem);
+            opacity: 1;
+        }
+    }
+    
+    &:hover .Toastify__toast {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+        
+        &:nth-last-child(1) {
+            transform: scale(1) translateY(0rem);
+        }
+        &:nth-last-child(2) {
+            transform: scale(1) translateY(0rem);
+        }
+        &:nth-last-child(3) {
+            transform: scale(1) translateY(0rem);
+        }
+    }
+}
+
+.Toastify__toast {
+    @apply rounded-lg;
+    
+    transform: scale(0) translateY(1rem);
+    opacity: 0;
+    
+    &:last-child {
+        margin-bottom: 0;
+        @apply rounded-t-lg;
+    }
 }

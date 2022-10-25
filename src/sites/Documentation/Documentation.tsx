@@ -7,15 +7,16 @@ import Header from './components/Header/Header';
 import SideMenu from './components/SideMenu/SideMenu';
 import ConfigurationExportPage from './pages/ConfigurationExportPage/ConfigurationExportPage';
 import DocsMainPage from './pages/DocsMainPage/DocsMainPage';
+import dataLoader from './pages/DocsSectionPage/dataLoader';
 import DocsSectionIndexPage from './pages/DocsSectionPage/DocsSectionIndexPage';
 import DocsSectionPage from './pages/DocsSectionPage/DocsSectionPage';
 import DocsSubSectionPage from './pages/DocsSubSectionPage/DocsSubSectionPage';
 import FlavourDetailPage from './pages/FlavoursPage/FlavourDetailPage/FlavourDetailPage';
 import FlavoursPage from './pages/FlavoursPage/FlavoursPage';
 
-interface Props extends PropsWithChildren {};
+interface Props {};
 
-const Documentation: FC<Props> = ({ children }) => {
+const Documentation: FC<Props> = () => {
     const [ open, setOpen ] = useState(true);
 
     const toggleMenu = () => setOpen(s => !s);
@@ -43,7 +44,10 @@ const Documentation: FC<Props> = ({ children }) => {
                         <Routes>
                             <Route index element={ <Navigate to="getting-started/installation" /> }/>
                                 
-                            <Route path=":sectionIdentifier" element={ <DocsSectionPage /> }>
+                            <Route 
+                                path=":sectionIdentifier" 
+                                element={ <DocsSectionPage /> }
+                            >
                                 <Route index element={ <DocsSectionIndexPage /> } />
                                 <Route path=":subSectionIdentifier" element={ <DocsSubSectionPage /> } />
                             </Route>

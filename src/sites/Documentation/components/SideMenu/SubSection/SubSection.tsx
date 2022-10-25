@@ -24,6 +24,7 @@ const SubSection: FC<Props> = ({ sections, level, baseUri }) => {
                 return (
                     <>
                         <li 
+                            key={ section.id }
                             className={classNames(
                                 'ml-0 pl-5 py-2 border-l border-stone-300 ',
                                 level === 1 ? '' : ''

@@ -4,3 +4,4 @@ export { default as BreadCrumbNavBar } from './BreadCrumbNavBar/BreadCrumbNavBar
 export { default as BaseHeader } from './BaseHeader/BaseHeader';
 export { default as Input } from './FormControls/Input';
 export { default as ControlledForm } from './ControlledForm/ControlledForm';
+export { default as ReleaseTimeline } from './ReleaseTimeline/ReleaseTimeline';

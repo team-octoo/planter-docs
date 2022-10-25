@@ -25,6 +25,7 @@ const InputWrapper = tw.label<InputWrapperProps >`
     border border-opacity-30 hover:border-opacity-100 focus-within:border-opacity-100
     ${ (props: GeneralProps) => props.isDisabled && !props.isInvalid ? 'bg-stone-100 border-stone-300' : 'hover:border-black focus-within:hover:border-black focus-within:border-black' }
     ${ (props: GeneralProps) => props.isInvalid ? 'border-red-600 hover:border-red-600 focus-within:border-red-600 focus-within:hover:border-red-600' : '' }
+    ${ (props: GeneralProps) => props.isDisabled ? 'cursor-not-allowed' : 'cursor-text' }
 `;
 
 const InputField = FieldWrapper(tw.input`

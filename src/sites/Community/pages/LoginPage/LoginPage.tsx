@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren, useEffect } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { Button, Icon, LogoOctoo } from '../../../../components/basics';
 import { ControlledForm, Input } from '../../../../components/elements';
 import useDirectusAuth from '../../../../state/hooks/useDirectus/useDirectusAuth/useDirectusAuth';
@@ -48,7 +48,9 @@ const LoginPage: FC<Props> = () => {
                     <h3 className="font-medium text-lg">Don't have an account (yet)?</h3>
                     <p className="text-stone-600">Sign up to contribute to our community</p>
                 </div>
-                <Button icon="arrow-right">Register here</Button>
+                <Link to="../register">
+                    <Button icon="arrow-right">Register here</Button>
+                </Link>
             </div>
             <div className="mt-10">
                 <a href="https://octoo.be" target="_blank" rel="noreffer noopener">

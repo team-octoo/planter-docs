@@ -5,7 +5,7 @@ import Icon from '../Icon/Icon';
 import BaseButton from './BaseButton';
 import { IButton } from './Button.types';
 
-const Button: FC<IButton> = ({ children, icon, iconPlacement = 'end', to, onClick, ...otherProps }) => {
+const Button: FC<IButton> = ({ children, icon, iconPlacement = 'end', to, onClick, noIconTheme, ...otherProps }) => {
     const navigate = useNavigate()
     const handleClick = useCallback((event: any) => {
         if (to) {
@@ -20,9 +20,9 @@ const Button: FC<IButton> = ({ children, icon, iconPlacement = 'end', to, onClic
             onClick={ handleClick }
             { ...otherProps }
         >
-            {( icon && iconPlacement === 'start') && <Icon name={ icon } />}
+            {( icon && iconPlacement === 'start') && <Icon noStyle={ noIconTheme ? true : false } name={ icon } />}
             { children }
-            {( icon && iconPlacement === 'end') && <Icon name={ icon } />}
+            {( icon && iconPlacement === 'end') && <Icon noStyle={ noIconTheme ? true : false } name={ icon } />}
         </BaseButton>
     )
 }

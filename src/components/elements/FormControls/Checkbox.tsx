@@ -3,6 +3,7 @@ import tw from 'tailwind-styled-components';
 
 type WrapperProps = {
     isDisabled?: boolean;
+    children: any;
 }
 
 const Wrapper = tw.label<WrapperProps>`

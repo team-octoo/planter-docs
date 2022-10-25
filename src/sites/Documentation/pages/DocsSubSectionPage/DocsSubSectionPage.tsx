@@ -53,7 +53,7 @@ const DocsSubSectionPage: FC<Props> = ({ children }) => {
     )
     
     else if (!subSection) return <ErrorPageLayout />
-        
+            
     return (
         <div className="px-12">
             <div className="mb-4">
@@ -68,8 +68,8 @@ const DocsSubSectionPage: FC<Props> = ({ children }) => {
                     <div>
                         <h3 className="mb-2 text-right text-stone-600">Supported frameworks</h3>
                         <ul className="text-right">
-                            { subSection.frameworks.map((framework) => (
-                                <li className="rounded-full px-3 py-1 border border-stone-300 inline-flex items-center ml-2">
+                            { subSection.frameworks.map((framework, index) => (
+                                <li key={ index } className="rounded-full px-3 py-1 border border-stone-300 inline-flex items-center ml-2">
                                     <Icon name="code" size="1rem" className="mr-2" />
                                     <span className="text-sm">{ framework.frameworks_id.name }</span>
                                 </li>

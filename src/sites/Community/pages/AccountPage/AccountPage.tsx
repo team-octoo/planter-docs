@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren, useState } from 'react';
 import { Icon } from '../../../../components/basics';
 import BaseModule from './BaseModule';
-import AccountOverviewModule from './modules/AccountOverviewModule';
+import PasswordModule from './modules/PasswordModule';
 import DiscoverabilityModule from './modules/DiscoverabilityModule';
 import UserNameModule from './modules/UserNameModule';
 
@@ -24,7 +24,7 @@ const AccountPage: FC<Props> = ({ children }) => {
                 {
                     label: 'Authentication',
                     description: 'Change or reset your password',
-                    render: <AccountOverviewModule />,    
+                    render: <PasswordModule />,    
                     collapse: true,     
                 },
             ]
